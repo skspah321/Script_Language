@@ -1,4 +1,4 @@
-def div(a):
-    print u"Result :", a/2
-num = raw_input("input any number :")
-div(int(num))
+import math
+
+print(math.log(100))
+print(math.sin(90))
