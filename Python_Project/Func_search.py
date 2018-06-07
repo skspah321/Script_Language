@@ -69,4 +69,4 @@ def Search_All(*args):
 Search_number = 10   # 검색 개수 설정
 data_sort = "sim"   # 최신순 or 정확도순
 
-Search_All("신림역 맛집",Search_number,data_sort)
+Search_All("한강진역 맛집",Search_number,data_sort)
