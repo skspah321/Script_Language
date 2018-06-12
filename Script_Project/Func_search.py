@@ -3,19 +3,20 @@ import sys
 import urllib.request
 import Client
 import json
+import glob
+import Tk_GetImage
 
 client_id = Client.client_id
 client_secret = Client.client_secret
 
-Search_number = 10   # 검색 개수 설정
-data_sort = "sim"   # 최신순 or 정확도순
 
-def Search_Blog(word):
+def Search_Blog(word,Search_number,data_sort):
     display_ = "&display=" + str(Search_number)  # 20개 찾음
     start_ = "&start=1"  # 첫번째 부터
     sort_ = "&sort=" + str(data_sort)  # 검색 순
     encText = urllib.parse.quote(word)
     url = "https://openapi.naver.com/v1/search/blog?query=" + encText + display_ + start_ + sort_  # json 결과
+
     request = urllib.request.Request(url)
     request.add_header("X-Naver-Client-Id", client_id)
     request.add_header("X-Naver-Client-Secret", client_secret)
@@ -26,16 +27,18 @@ def Search_Blog(word):
     if (rescode == 200):
         response_body = response.read()
         #print(response_body.decode('utf-8'))
-        return response_body
+        f = json.loads(response_body)
+        return f
 
     else:
         print("Error Code:" + rescode)
 
 
-def Search_Cafe(word):
+def Search_Cafe(word,Search_number,data_sort):
     display_ = "&display=" + str(Search_number)  # 20개 찾음
     start_ = "&start=1"  # 첫번째 부터
     sort_ = "&sort=" + str(data_sort)  # 검색 순
+
     encText = urllib.parse.quote(word)
     url = "https://openapi.naver.com/v1/search/cafearticle.json?query=" + encText + display_ + start_ + sort_  # json 결과
     request = urllib.request.Request(url)
@@ -47,22 +50,20 @@ def Search_Cafe(word):
     if (rescode == 200):
         response_body = response.read()
         #print(response_body.decode('utf-8'))
-        return response_body
+        f = json.loads(response_body)
+        return f
 
     else:
         print("Error Code:" + rescode)
 
 
-def Search_All(word):
-    f = json.loads(Search_Blog(word))
-    for item in f["items"]:
-        print(item["title"])
+def Search_All(word,Search_number,data_sort):
+    f1 = Search_Blog(word,Search_number,data_sort)
+    f2 = Search_Cafe(word,Search_number,data_sort)
 
-    f = json.loads(Search_Cafe(word))
-    for item in f["items"]:
-        print(item["title"])
+    return f1,f2
 
-def Searh_Image(word):
+def Search_Image(word,Search_number,data_sort):
     display_ = "&display=" + str(Search_number)  # 20개 찾음
     start_ = "&start=1"  # 첫번째 부터
     sort_ = "&sort=" + str(data_sort)  # 검색 순
@@ -77,7 +78,8 @@ def Searh_Image(word):
     if (rescode == 200):
         response_body = response.read()
         print(response_body.decode('utf-8'))
-        return response_body
+        f = json.loads(response_body)
+        return f
 
     else:
         print("Error Code:" + rescode)
@@ -88,6 +90,6 @@ def Searh_Image(word):
 #for item in f["items"]:
 #    item["link"].replace("?Redirect=Log&amp;logNo=", "/")
 
+#jsonfile = Search_Image("한강진역 맛집",10,'sim')
+#Tk_GetImage.Open_Image(jsonfile,3)
 
-#Search_All("한강진역 맛집",Search_number,data_sort)
-Searh_Image("한강진역 맛집")

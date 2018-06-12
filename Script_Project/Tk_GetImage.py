@@ -3,17 +3,24 @@ from io import BytesIO
 import urllib.request
 from PIL import Image, ImageTk
 
-root=Tk()
-root.geometry("500x500+500+200")
-#openapi로 이미지 url을 가져옴.
-url="http://tong.visitkorea.or.kr/cms/resource/74/2396274_image2_1.JPG"
-with urllib.request.urlopen(url) as u:
-    raw_data = u.read()
+def Open_Image(jsonfile,num):
+    root2 = Toplevel()
+    i = int(num)
+    root2.title('이미지')
+    height = jsonfile['items'][i]['sizeheight']
+    width = jsonfile['items'][i]['sizewidth']
+    root2.geometry(str(width)+'x'+str(height))
 
-im = Image.open(BytesIO(raw_data))
-image = ImageTk.PhotoImage(im)
+    # openapi로 이미지 url을 가져옴.
+    url = jsonfile['items'][i]['link']
+    with urllib.request.urlopen(url) as u:
+        raw_data = u.read()
 
-label=Label(root,image=image,height=400,width=400)
-label.pack()
-label.place(x=0,y=0)
-root.mainloop()
+    im = Image.open(BytesIO(raw_data))
+    image = ImageTk.PhotoImage(im)
+
+    label = Label(root2, image=image, height=height, width=width)
+    label.pack()
+    label.place(x=0, y=0)
+    root2.mainloop()
+
