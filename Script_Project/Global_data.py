@@ -1,3 +1,5 @@
-Favorite_Blog = {}
 Favorite_All = {}
-Favorite_Cafe = {}
+Search_value = ""
+
+Get_Sort = 'sim'
+Get_Num = 10

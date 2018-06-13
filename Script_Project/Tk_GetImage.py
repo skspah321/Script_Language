@@ -9,7 +9,7 @@ def Open_Image(jsonfile,num):
     root2.title('이미지')
     height = jsonfile['items'][i]['sizeheight']
     width = jsonfile['items'][i]['sizewidth']
-    root2.geometry(str(width)+'x'+str(height))
+    root2.geometry('600x600')
 
     # openapi로 이미지 url을 가져옴.
     url = jsonfile['items'][i]['link']
@@ -17,10 +17,13 @@ def Open_Image(jsonfile,num):
         raw_data = u.read()
 
     im = Image.open(BytesIO(raw_data))
-    image = ImageTk.PhotoImage(im)
+    im2 = im.resize((600, 600), Image.ANTIALIAS)
+    image = ImageTk.PhotoImage(im2)
 
-    label = Label(root2, image=image, height=height, width=width)
+    label = Label(root2, image=image)  #height=height, width=width
     label.pack()
     label.place(x=0, y=0)
     root2.mainloop()
+
+
 

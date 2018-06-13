@@ -36,7 +36,7 @@ def Send_HTML():
         server.ehlo()
         server.login('skspah888', 'wnsroaht153!')
         server.send_message(message)
-    print("HTML 이메일을 발송하였습니다")
+
 
 
 

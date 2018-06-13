@@ -16,7 +16,8 @@ def Reduce_url(*args):
     rescode = response.getcode()
     if (rescode == 200):
         response_body = response.read()
-        print(response_body.decode('utf-8'))
+        #print(response_body.decode('utf-8'))
     else:
-        print("Error Code:" + rescode)
+        pass
+        #print("Error Code:" + rescode)
 
